@@ -1,4 +1,8 @@
 #!/system/bin/sh
+#description     :This script start loop to lover CPU voltage for specified frequency until device hang and reboot.
+#author          :cobain
+#date            :20181410
+#version         :1.0
 
 #set -x
 
