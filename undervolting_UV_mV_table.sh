@@ -76,7 +76,7 @@ do
   #echo ${FREQLIST[0]} > /sys/devices/system/cpu/cpu$cpu/cpufreq/scaling_min_freq;
   #echo $TEST_FREQ > /sys/devices/system/cpu/cpu$cpu/cpufreq/scaling_max_freq;
   # Unlock all frequencies at msm_cpufreq driver
-  if [ -f /sys/kernel/msm_cpufreq_limit/cpufreq_limit ]; then echo ${FREQLIST[-1]} > /sys/kernel/msm_cpufreq_limit/cpufreq_limit; fi
+  if [ -f /sys/kernel/msm_cpufreq_limit/cpufreq_limit ]; then echo 3000 > /sys/kernel/msm_cpufreq_limit/cpufreq_limit; fi
 done
 
 # Main loop
