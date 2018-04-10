@@ -12,7 +12,7 @@
 #  3) set frequencies list for testing. For example:
 #  set list=300000 422400 652800 729600 883200 960000 1036800 1190400 1267200 1497600 1574400 1728000 1958400 2265600
 #  or
-#  for /f "delims=" %%i in ('adb shell "cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies"') do ( set freqlist=%%i)
+#  for /f "delims=" %i in ('adb shell "cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies"') do ( set freqlist=%i)
 #  4) start undervolting script for each frequency which find lower voltage:
 #  for %a in (%list%) do ( adb wait-for-device & adb shell su -c /system/bin/sh /sdcard/undervolting_UV_mV_table.sh %a & TIMEOUT 60)
 #
