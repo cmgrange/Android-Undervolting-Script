@@ -17,8 +17,8 @@
 #  for %a in (%list%) do ( adb wait-for-device & adb shell su -c /system/bin/sh /sdcard/undervolting_UV_mV_table.sh %a & TIMEOUT 60)
 #
 
-# initial value for UV offset. recommend 25
-UV_SHIFT="-150"
+# initial value for UV offset. recommend -25
+UV_SHIFT="-25"
 sdcard="/sdcard"
 
 # check root
