@@ -38,11 +38,11 @@
 
 <script type="text/javascript">
   var completed = 0;
+  var finish = false;
   var benchmarks = BenchmarkSuite.CountBenchmarks();
   var success = true;
   var latencyBenchmarks = ["Splay", "Mandreel"];
-  var skipBenchmarks =
-          typeof skipBenchmarks === "undefined" ? [] : skipBenchmarks;
+  var skipBenchmarks = ["zlib", "Mandreel", "MandreelLatency", "Gameboy"];
 
   function ShowBox(name) {
     var box = document.getElementById("Box-" + name);
@@ -82,20 +82,21 @@
     } else {
       status.innerHTML = "Octane Score (incomplete): " + score;
     }
-    document.getElementById("progress-bar-container").style.visibility = 'hidden';
-    document.getElementById("bottom-text").style.visibility = 'visible';
-    document.getElementById("inside-anchor").removeChild(document.getElementById("bar-appendix"));
-    document.getElementById("alertbox").style.visibility = 'hidden';
+    //document.getElementById("progress-bar-container").style.visibility = 'hidden';
+    //document.getElementById("inside-anchor").removeChild(document.getElementById("bar-appendix"));
+    //document.getElementById("alertbox").style.visibility = 'hidden';
+	finish = true;
   }
 
   function Run() {
+  completed = 0;
     document.getElementById("main-banner").innerHTML = "Running Octane...";
     // append the progress bar elements..
     document.getElementById("bar-appendix").innerHTML = "<br/><div class=\"progress progress-striped\" id=\"progress-bar-container\" style=\"visibility:hidden\"><div class=\"bar\"style=\"width: 0%;\" id=\"progress-bar\"></div></div>";
     var anchor = document.getElementById("run-octane");
     var parent = document.getElementById("main-container");
-    parent.appendChild(document.getElementById("inside-anchor"));
-    parent.removeChild(anchor);
+    //parent.appendChild(document.getElementById("inside-anchor"));
+    //parent.removeChild(anchor);
 
     document.getElementById("startup-text").innerHTML="";
 
@@ -122,12 +123,23 @@
     }
     if (window.document.URL.indexOf('skip_zlib=1') >= 0)
       skipBenchmarks.push("zlib");
-    if (window.document.URL.indexOf('auto=1') >= 0)
+    //if (window.document.URL.indexOf('auto=1') >= 0)
       Run();
   }
 
+  function checkComplete() {
+   if (finish) {
+     finish = false;
+     completed = 0;
+	 Run();
+   } else {
+     document.getElementById("navbar").innerHTML = completed + " / " + benchmarks;
+   }
+  }
+  
   function Load() {
     setTimeout(CheckCompatibility, 200);
+    setInterval(checkComplete, 2000);
   }
 </script>
 <!-- end Octane benchmark code -->
@@ -162,7 +174,7 @@ body {
 
 <body onLoad="Load()">
 
-  <div class="navbar navbar-fixed-top">
+  <div class="navbar navbar-fixed-top" id="navbar">
     <div class="navbar-inner">
 
       <div class="container">
@@ -410,11 +422,6 @@ body {
 
     </div>
     <!-- /content -->
-
-    <div id="bottom-text" style="color:white; visibility:hidden" align="center">
-      <br></br>
-       The final score is the <a href="http://en.wikipedia.org/wiki/Geometric_mean#Properties">geometric mean</a> of the single scores. We suggest to restart the browser before repeating the test.
-    </div>
 
   </div>
   <!-- /container -->
